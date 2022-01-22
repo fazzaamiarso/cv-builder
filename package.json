@@ -6,10 +6,20 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "jest --watchAll ",
+    "lint": "eslint src",
     "cypress:open": "cypress open"
   },
   "dependencies": {
     "cypress": "^9.3.1",
+    "eslint": "^8.7.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-react-app": "^7.0.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-jest": "^25.7.0",
+    "eslint-plugin-jest-dom": "^4.0.1",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-testing-library": "^5.0.4",
+    "prettier": "^2.5.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
