@@ -40,7 +40,7 @@
     "vite": "^2.7.2"
   },
   "lint-staged": {
-    "**/*.{js, jsx}": [
+    "src/**/*.{js,jsx}": [
       "yarn lint",
       "prettier --write",
       "yarn test --watchAll=false --findRelatedTests --bail"
