@@ -6,7 +6,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "jest --watchAll ",
-    "lint": "eslint src --fix",
+    "lint": "eslint src",
     "cypress:open": "cypress open",
     "prepare": "husky install"
   },
