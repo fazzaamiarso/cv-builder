@@ -1,20 +1,29 @@
 module.exports = {
   extends: [
-    "react-app",
-    "plugin:cypress/recommended",
-    "plugin:jest/recommended",
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "prettier",
+    'eslint:recommended',
+    'react-app',
+    'plugin:cypress/recommended',
+    'plugin:jest/recommended',
+    'plugin:react/recommended',
+    'prettier',
   ],
-  plugins: ["react", "jest", "cypress"],
+  plugins: ['react', 'cypress', 'jest'],
   env: {
     browser: true,
-    "cypress/globals": true,
+    'cypress/globals': true,
     es6: true,
-    "jest/globals": true,
+    'jest/globals': true,
   },
   rules: {
-    "react/react-in-jsx-scope": "off",
+    'react/react-in-jsx-scope': 'off',
   },
+  overrides: [
+    {
+      //Exluded jest rules on cypress file
+      files: 'cypress/**/*.spec.js',
+      rules: {
+        'jest/expect-expect': 'off',
+      },
+    },
+  ],
 };
