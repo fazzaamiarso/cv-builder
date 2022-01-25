@@ -1,23 +1,23 @@
+import { useForm, FormProvider } from 'react-hook-form';
+import { useEffect } from 'react';
+import PersonalForm from './PersonalForm';
+
 const Form = ({ currentSection }) => {
+  const formMethods = useForm();
+
+  const submitHandler = formValues => {
+    console.log(formValues);
+  };
+
   return (
     <main className="">
       <h2 className="text-lg font-bold">{currentSection}</h2>
-      <form>
-        <label htmlFor="firstName">First name</label>
-        <input
-          type="text"
-          placeholder="John"
-          id="firstName"
-          className="ring-1 ring-black"
-        />
-        <label htmlFor="lastName">Last name</label>
-        <input
-          type="text"
-          placeholder="John"
-          id="lastName"
-          className="ring-1 ring-black"
-        />
-      </form>
+      <FormProvider {...formMethods}>
+        <form onSubmit={formMethods.handleSubmit(submitHandler)}>
+          <PersonalForm />
+          <button type="submit">submit</button>
+        </form>
+      </FormProvider>
     </main>
   );
 };
