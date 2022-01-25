@@ -45,8 +45,7 @@
   "lint-staged": {
     "src/**/*.{js,jsx}": [
       "yarn lint",
-      "prettier --write",
-      "yarn test --watchAll=false --findRelatedTests --bail"
+      "prettier --write"
     ]
   }
 }

@@ -1,4 +1,6 @@
+import EditorContainer from './components/EditorContainer';
+
 function App() {
-  return <h2 className="bg-red-600">Hello vite tailwind</h2>;
+  return <EditorContainer />;
 }
 export default App;
