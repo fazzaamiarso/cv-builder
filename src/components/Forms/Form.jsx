@@ -1,6 +1,6 @@
 import { useForm, FormProvider } from 'react-hook-form';
-import { useEffect } from 'react';
 import PersonalForm from './PersonalForm';
+import Summary from './Summary';
 
 const Form = ({ currentSection }) => {
   const formMethods = useForm();
@@ -14,7 +14,8 @@ const Form = ({ currentSection }) => {
       <h2 className="text-lg font-bold">{currentSection}</h2>
       <FormProvider {...formMethods}>
         <form onSubmit={formMethods.handleSubmit(submitHandler)}>
-          <PersonalForm />
+          {currentSection === 'Personal info' && <PersonalForm />}
+          {currentSection === 'Summary' && <Summary />}
           <button type="submit">submit</button>
         </form>
       </FormProvider>
