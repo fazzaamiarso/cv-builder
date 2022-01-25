@@ -8,7 +8,6 @@ const Summary = () => {
   useEffect(() => {
     return () => {
       unregister('summary');
-      console.log('Unmount');
     };
   }, [unregister]);
   return (

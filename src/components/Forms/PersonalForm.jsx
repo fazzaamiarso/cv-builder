@@ -16,7 +16,6 @@ const PersonalForm = () => {
 
     return () => {
       unregisterAll();
-      console.log('Unmount');
     };
   }, [unregister]);
 

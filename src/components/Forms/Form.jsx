@@ -3,13 +3,14 @@ import Summary from './Summary';
 import PersonalForm from './PersonalForm';
 import Education from './Education';
 
-const Form = ({ currentSection }) => {
+const Form = ({ currentSection, onAddInput }) => {
   const formMethods = useForm();
 
   const submitHandler = formValues => {
-    console.log(formValues);
+    const newInput = { ...formValues, sectionName: currentSection };
+    formMethods.reset();
+    onAddInput(newInput);
   };
-
   return (
     <main className="">
       <h2 className="text-lg font-bold">{currentSection}</h2>
