@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 
 const Input = ({ label, placeholder, name, type }) => {
   const isTextArea = type === 'textarea';
-  const { register, control } = useFormContext();
+  const { register } = useFormContext();
   return (
     <div className="flex flex-col">
       <label htmlFor={label}>{name}</label>
@@ -14,7 +14,6 @@ const Input = ({ label, placeholder, name, type }) => {
         />
       ) : (
         <input
-          control={control}
           {...register(label, { required: true })}
           type={type}
           placeholder={placeholder}
