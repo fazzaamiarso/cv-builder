@@ -1,7 +1,7 @@
 import SectionSelector from './SectionSelector';
-import Form from './Forms/Form';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import CVSettings from './CVSettings/CVSettings';
+import { Outlet } from 'react-router-dom';
 
 const EditorContainer = () => {
   const [currentSection, setCurrentSection] = useState('Personal info');
@@ -10,14 +10,25 @@ const EditorContainer = () => {
   const handleAddInput = newInput => {
     setSectionsAdded(prevState => [...prevState, newInput]);
   };
-  useEffect(() => {
-    console.log(sectionsAdded);
-  }, [sectionsAdded]);
+  const handleUpdateInput = (idx, newValue) => {
+    setSectionsAdded(prevState => {
+      const newArr = [...prevState];
+      newArr[idx] = newValue;
+      return newArr;
+    });
+  };
 
   return (
     <main className="w-full mt-10 flex gap-4">
       <SectionSelector onSelectSection={setCurrentSection} />
-      <Form currentSection={currentSection} onAddInput={handleAddInput} />
+      <Outlet
+        context={{
+          currentSection,
+          onAddInput: handleAddInput,
+          sectionsAdded,
+          onUpdateInput: handleUpdateInput,
+        }}
+      />
       <CVSettings sectionsAdded={sectionsAdded} />
     </main>
   );

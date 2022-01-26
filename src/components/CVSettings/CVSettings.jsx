@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const CVSettings = ({ sectionsAdded }) => {
   return (
     <section className="">
@@ -9,11 +11,8 @@ const CVSettings = ({ sectionsAdded }) => {
         ) : (
           sectionsAdded.map(section => {
             return (
-              <li
-                key={`${section.sectionName}${Math.random()}`}
-                className="bg-blue-300"
-              >
-                {section.sectionName}
+              <li key={`${section.id}`} className="bg-blue-300">
+                <Link to={`edit/${section.id}`}>{section.sectionName}</Link>
               </li>
             );
           })

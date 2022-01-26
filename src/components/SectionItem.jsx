@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const SectionItem = ({ sectionName, onSelected }) => {
   const handleSelect = () => {
     onSelected(sectionName);
@@ -5,7 +7,7 @@ const SectionItem = ({ sectionName, onSelected }) => {
 
   return (
     <li className="cursor-pointer" onClick={handleSelect}>
-      {sectionName}
+      <Link to={`/editor/add`}>{sectionName}</Link>
     </li>
   );
 };

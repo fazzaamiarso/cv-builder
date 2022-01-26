@@ -1,9 +1,6 @@
 import Input from './Input';
-import { useFormContext } from 'react-hook-form';
 
 const Summary = () => {
-  const { register } = useFormContext();
-
   return (
     <>
       <Input
@@ -11,7 +8,6 @@ const Summary = () => {
         placeholder="Write your summary here..."
         label="summary"
         name="Summary"
-        register={register}
       />
     </>
   );
