@@ -16,9 +16,9 @@ const Form = ({ currentSection, onAddInput }) => {
       <h2 className="text-lg font-bold">{currentSection}</h2>
       <FormProvider {...formMethods}>
         <form onSubmit={formMethods.handleSubmit(submitHandler)}>
-          {currentSection === 'Personal info' && <PersonalForm />}
-          {currentSection === 'Summary' && <Summary />}
-          {currentSection === 'Education' && <Education />}
+          {currentSection === 'Personal info' ? <PersonalForm /> : null}
+          {currentSection === 'Summary' ? <Summary /> : null}
+          {currentSection === 'Education' ? <Education /> : null}
           <button type="submit">submit</button>
         </form>
       </FormProvider>

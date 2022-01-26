@@ -6,13 +6,13 @@ const Input = ({ label, placeholder, name, register, type }) => {
       <label htmlFor={label}>{name}</label>
       {isTextArea ? (
         <textarea
-          {...register(label, { required: true })}
+          {...register(label, { required: true, shouldUnregister: true })}
           placeholder={placeholder}
           id={label}
         />
       ) : (
         <input
-          {...register(label, { required: true })}
+          {...register(label, { required: true, shouldUnregister: true })}
           type={type}
           placeholder={placeholder}
           id={label}

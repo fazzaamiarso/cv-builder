@@ -1,15 +1,9 @@
 import Input from './Input';
 import { useFormContext } from 'react-hook-form';
-import { useEffect } from 'react';
 
 const Summary = () => {
-  const { register, unregister } = useFormContext();
+  const { register } = useFormContext();
 
-  useEffect(() => {
-    return () => {
-      unregister('summary');
-    };
-  }, [unregister]);
   return (
     <>
       <Input

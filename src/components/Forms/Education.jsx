@@ -1,23 +1,9 @@
 import Input from './Input';
 import { useFormContext } from 'react-hook-form';
-import { useEffect } from 'react';
 
 const PersonalForm = () => {
-  const { register, unregister } = useFormContext();
+  const { register } = useFormContext();
 
-  useEffect(() => {
-    const unregisterAll = () => {
-      unregister('institution');
-      unregister('fieldOfStudy');
-      unregister('studyFrom');
-      unregister('studyTo');
-    };
-
-    return () => {
-      unregisterAll();
-      console.log('Unmount');
-    };
-  }, [unregister]);
   return (
     <>
       <Input

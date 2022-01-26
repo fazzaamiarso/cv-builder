@@ -1,23 +1,8 @@
 import Input from './Input';
 import { useFormContext } from 'react-hook-form';
-import { useEffect } from 'react';
 
 const PersonalForm = () => {
-  const { register, unregister } = useFormContext();
-
-  useEffect(() => {
-    const unregisterAll = () => {
-      unregister('firstName');
-      unregister('lastName');
-      unregister('phoneNumber');
-      unregister('address');
-      unregister('email');
-    };
-
-    return () => {
-      unregisterAll();
-    };
-  }, [unregister]);
+  const { register } = useFormContext();
 
   return (
     <>
