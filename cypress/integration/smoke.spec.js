@@ -1,6 +1,6 @@
-describe('Smoke Test', () => {
+describe('Happy path', () => {
   it('can view the home page', () => {
     cy.visit('/');
-    cy.contains(/vite/i);
+    cy.contains(/dashboard/i);
   });
 });

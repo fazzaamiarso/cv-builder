@@ -6,19 +6,24 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "jest --watchAll ",
-    "lint": "eslint src",
+    "lint": "eslint src/**/*.{js,jsx} --fix ",
     "cypress:open": "cypress open",
     "prepare": "husky install"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^2.1.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-hook-form": "^7.25.0",
+    "react-router-dom": "6"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
+    "@testing-library/dom": "^8.11.2",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
     "@vitejs/plugin-react": "^1.0.7",
     "autoprefixer": "^10.4.2",
     "babel-jest": "^27.4.6",
@@ -30,6 +35,7 @@
     "eslint-plugin-jest": "^25.7.0",
     "eslint-plugin-jest-dom": "^4.0.1",
     "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-testing-library": "^5.0.4",
     "husky": "^7.0.0",
     "jest": "^27.4.7",
@@ -37,13 +43,14 @@
     "postcss": "^8.4.5",
     "prettier": "^2.5.1",
     "tailwindcss": "^3.0.15",
-    "vite": "^2.7.2"
+    "vite": "^2.7.2",
+    "vite-plugin-shim-react-pdf": "^1.0.4"
   },
   "lint-staged": {
     "src/**/*.{js,jsx}": [
       "yarn lint",
       "prettier --write",
-      "yarn test --watchAll=false --findRelatedTests --bail"
+      "yarn test --watchAll=false --bail --findRelatedTests"
     ]
   }
 }
