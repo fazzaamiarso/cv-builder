@@ -4,6 +4,10 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import EditorContainer from '../components/EditorContainer';
 
+it('Happy path', () => {
+  expect(true).toBe(true);
+});
+
 // describe('Editor Container', () => {
 //   it('render the correct form for selected section', () => {
 //     render(<EditorContainer />);

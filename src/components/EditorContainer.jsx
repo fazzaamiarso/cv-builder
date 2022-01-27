@@ -2,7 +2,7 @@ import SectionSelector from './SectionSelector';
 import { useState } from 'react';
 import CVSettings from './CVSettings/CVSettings';
 import { Outlet } from 'react-router-dom';
-import PDF from './PDF';
+import PDF from './PDF/PDF';
 
 const EditorContainer = () => {
   const [currentSection, setCurrentSection] = useState('Personal info');
