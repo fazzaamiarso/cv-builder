@@ -1,5 +1,6 @@
 import { useForm, FormProvider } from 'react-hook-form';
 import Summary from './Summary';
+import Work from './Work';
 import PersonalForm from './PersonalForm';
 import Education from './Education';
 import { useOutletContext, useParams } from 'react-router-dom';
@@ -35,6 +36,7 @@ const EditForm = () => {
           {itemToEdit.sectionName === 'Personal info' ? <PersonalForm /> : null}
           {itemToEdit.sectionName === 'Summary' ? <Summary /> : null}
           {itemToEdit.sectionName === 'Education' ? <Education /> : null}
+          {itemToEdit.sectionName === 'Work' ? <Work /> : null}
           <button type="submit">submit</button>
         </form>
       </FormProvider>

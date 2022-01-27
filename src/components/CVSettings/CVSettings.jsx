@@ -10,6 +10,7 @@ const CVSettings = ({ sectionsAdded }) => {
   const educationsItem = sectionsAdded.filter(
     item => item.sectionName === 'Education',
   );
+  const worksItem = sectionsAdded.filter(item => item.sectionName === 'Work');
 
   return (
     <section className="">
@@ -35,7 +36,21 @@ const CVSettings = ({ sectionsAdded }) => {
               {educationsItem.map(item => {
                 return (
                   <li key={item.id}>
-                    <Link to={`/editor/edit/${item.id}`}>EducationItem</Link>
+                    <Link to={`/editor/edit/${item.id}`}>Education Item</Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </li>
+        )}
+        {worksItem.length === 0 ? null : (
+          <li>
+            <div>Work</div>
+            <ul>
+              {worksItem.map(item => {
+                return (
+                  <li key={item.id}>
+                    <Link to={`/editor/edit/${item.id}`}>{item.role}</Link>
                   </li>
                 );
               })}

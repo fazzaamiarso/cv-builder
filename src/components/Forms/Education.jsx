@@ -15,6 +15,7 @@ const Education = () => {
         name="Field of Study"
         type="text"
       />
+      <Input label="degree" placeholder="Bsc" name="Degree" type="text" />
       <Input label="studyFrom" name="From" type="month" />
       <Input label="studyTo" name="To" type="month" />
     </>

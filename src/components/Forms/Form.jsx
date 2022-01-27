@@ -3,6 +3,7 @@ import Summary from './Summary';
 import PersonalForm from './PersonalForm';
 import Education from './Education';
 import { useOutletContext } from 'react-router-dom';
+import Work from './Work';
 
 const Form = () => {
   const formMethods = useForm({ shouldUnregister: true });
@@ -27,6 +28,7 @@ const Form = () => {
           {currentSection === 'Personal info' ? <PersonalForm /> : null}
           {currentSection === 'Summary' ? <Summary /> : null}
           {currentSection === 'Education' ? <Education /> : null}
+          {currentSection === 'Work' ? <Work /> : null}
           <button type="submit">submit</button>
         </form>
       </FormProvider>
