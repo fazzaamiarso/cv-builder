@@ -15,12 +15,7 @@ const Work = () => {
         name="Company Name"
         type="text"
       />
-      <Input
-        label="workLocation"
-        placeholder="Seattle, USA"
-        name="Location"
-        type="text"
-      />
+
       <Input label="workFrom" name="From" type="month" />
       <Input label="workTo" name="To" type="month" />
 

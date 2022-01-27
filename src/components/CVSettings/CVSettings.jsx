@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const CVSettings = ({ sectionsAdded }) => {
+const CVSettings = ({ sectionsAdded, onTogglePreview }) => {
   const personalInfoItem = sectionsAdded.find(
     item => item.sectionName === 'Personal info',
   );
@@ -58,6 +58,9 @@ const CVSettings = ({ sectionsAdded }) => {
           </li>
         )}
       </ul>
+      <button onClick={onTogglePreview} className="bg-blue-500">
+        Preview
+      </button>
     </section>
   );
 };

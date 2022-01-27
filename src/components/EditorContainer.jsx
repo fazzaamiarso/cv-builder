@@ -7,6 +7,11 @@ import PDF from './PDF';
 const EditorContainer = () => {
   const [currentSection, setCurrentSection] = useState('Personal info');
   const [sectionsAdded, setSectionsAdded] = useState([]);
+  const [showPreview, setShowPreview] = useState(false);
+
+  const handleToggle = () => {
+    setShowPreview(!showPreview);
+  };
 
   const handleAddInput = newInput => {
     setSectionsAdded(prevState => [...prevState, newInput]);
@@ -30,8 +35,11 @@ const EditorContainer = () => {
           onUpdateInput: handleUpdateInput,
         }}
       />
-      <CVSettings sectionsAdded={sectionsAdded} />
-      <PDF />
+      <CVSettings
+        sectionsAdded={sectionsAdded}
+        onTogglePreview={handleToggle}
+      />
+      {showPreview ? <PDF sectionsAdded={sectionsAdded} /> : null}
     </main>
   );
 };
