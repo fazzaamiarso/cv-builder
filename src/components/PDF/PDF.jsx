@@ -68,7 +68,9 @@ const MyDocument = ({ sectionsAdded }) => {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.sidebar}>
-          <Text style={styles.name}>Zhongli Daddy </Text>
+          <Text style={styles.name}>
+            {personalInfoItem?.firstName ?? 'Anonymous'}{' '}
+          </Text>
           <View style={styles.info}>
             <Text style={styles.infoItem}>8332129999</Text>
             <Text style={styles.infoItem}>Oak wood drive way 13</Text>

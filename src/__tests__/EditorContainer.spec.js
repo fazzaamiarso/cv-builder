@@ -53,9 +53,6 @@ describe('Editor Container', () => {
     const submitButton = screen.getByRole('button', { name: /submit/i });
     userEvent.click(submitButton);
 
-    expect(firstName.textContent).toBe('');
-    expect(lastName.textContent).toBe('');
-    expect(phoneNumber.textContent).toBe('');
     // react-hook-form onSubmit is always asynchronous
     expect(
       await screen.findByRole('link', { name: fakeInput.firstName }),
@@ -119,5 +116,11 @@ describe('Editor Container', () => {
       //using findBy or getBy will throw error immediately and cant be asserted
       screen.queryByRole('link', { name: fakeInput.firstName }),
     ).not.toBeInTheDocument();
+  });
+});
+
+describe('Form', () => {
+  it('Happy path', () => {
+    expect(true).toBe(true);
   });
 });

@@ -35,7 +35,7 @@ const CVSettings = ({ sectionsAdded, onTogglePreview }) => {
             <ul>
               {educationsItem.map(item => {
                 return (
-                  <li key={item.id}>
+                  <li key={item.id} data-testid="educationItem">
                     <Link to={`/editor/edit/${item.id}`}>Education Item</Link>
                   </li>
                 );
@@ -49,7 +49,7 @@ const CVSettings = ({ sectionsAdded, onTogglePreview }) => {
             <ul>
               {worksItem.map(item => {
                 return (
-                  <li key={item.id}>
+                  <li key={item.id} data-testid="workItem">
                     <Link to={`/editor/edit/${item.id}`}>{item.role}</Link>
                   </li>
                 );
