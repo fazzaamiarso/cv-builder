@@ -20,7 +20,7 @@ const CVSettings = ({ sectionsAdded, onTogglePreview }) => {
         {personalInfoItem ? (
           <li>
             <Link to={`/editor/edit/${personalInfoItem.id}`}>
-              Personal Info
+              {personalInfoItem.firstName}
             </Link>
           </li>
         ) : null}
