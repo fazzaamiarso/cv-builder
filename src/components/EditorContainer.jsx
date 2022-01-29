@@ -36,7 +36,7 @@ const EditorContainer = () => {
   };
 
   return (
-    <main className="w-full mt-10 flex gap-4">
+    <main className="w-screen mt-10 px-10 flex justify-between gap-4 ">
       <SectionSelector onSelectSection={setCurrentSection} />
       <Outlet
         context={{

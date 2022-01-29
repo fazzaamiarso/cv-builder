@@ -16,8 +16,10 @@ const Work = () => {
         type="text"
       />
 
-      <Input label="workFrom" name="From" type="month" />
-      <Input label="workTo" name="To" type="month" />
+      <div className="flex gap-8">
+        <Input label="workFrom" name="From" type="month" />
+        <Input label="workTo" name="To" type="month" />
+      </div>
 
       <Input
         label="workDescription"

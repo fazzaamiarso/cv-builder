@@ -10,8 +10,10 @@ const Input = ({ label, placeholder, name, type, registerConfig = {} }) => {
     },
   } = useFormContext();
   return (
-    <div className="flex flex-col">
-      <label htmlFor={label}>{name}</label>
+    <div className="flex flex-col gap-1">
+      <label htmlFor={label} className="text-sm font-semibold">
+        {name}
+      </label>
       {isTextArea ? (
         <>
           <textarea
@@ -32,10 +34,10 @@ const Input = ({ label, placeholder, name, type, registerConfig = {} }) => {
             type={type}
             placeholder={placeholder}
             id={label}
-            className="ring-1 ring-black"
+            className="rounded-sm"
           />
           {error && (
-            <span className="text-xl" role="alert">
+            <span className="text-xs text-red-500" role="alert">
               {error.message}
             </span>
           )}

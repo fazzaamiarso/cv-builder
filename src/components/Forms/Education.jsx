@@ -16,8 +16,10 @@ const Education = () => {
         type="text"
       />
       <Input label="degree" placeholder="Bsc" name="Degree" type="text" />
-      <Input label="studyFrom" name="From" type="month" />
-      <Input label="studyTo" name="To" type="month" />
+      <div className="flex gap-8">
+        <Input label="studyFrom" name="From" type="month" />
+        <Input label="studyTo" name="To" type="month" />
+      </div>
     </>
   );
 };

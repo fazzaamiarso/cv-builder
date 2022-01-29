@@ -13,7 +13,7 @@ const CVSettings = ({ sectionsAdded, onTogglePreview, onRemoveItem }) => {
   const worksItem = sectionsAdded.filter(item => item.sectionName === 'Work');
 
   return (
-    <section className="">
+    <section className="bg-white">
       <h2 className="text-lg font-bold">CV Settings</h2>
       <p className="">Lorem ipsum dolor sit amet</p>
       <ul className="flex flex-col">
