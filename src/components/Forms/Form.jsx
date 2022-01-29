@@ -20,6 +20,7 @@ const Form = () => {
     onAddInput(newInput);
     formMethods.reset();
   };
+
   return (
     <main className="">
       <h2 className="text-lg font-bold">{currentSection}</h2>

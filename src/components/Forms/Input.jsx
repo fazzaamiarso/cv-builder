@@ -1,25 +1,45 @@
 import { useFormContext } from 'react-hook-form';
 
-const Input = ({ label, placeholder, name, type }) => {
+const Input = ({ label, placeholder, name, type, registerConfig = {} }) => {
   const isTextArea = type === 'textarea';
-  const { register } = useFormContext();
+  const {
+    register,
+    formState: {
+      errors: { [label]: error },
+      //use bracket to get the computed value of label
+    },
+  } = useFormContext();
   return (
     <div className="flex flex-col">
       <label htmlFor={label}>{name}</label>
       {isTextArea ? (
-        <textarea
-          {...register(label, { required: true })}
-          placeholder={placeholder}
-          id={label}
-        />
+        <>
+          <textarea
+            {...register(label, { required: 'Required', ...registerConfig })}
+            placeholder={placeholder}
+            id={label}
+          />
+          {error && (
+            <span className="text-xl" role="alert">
+              {error.message}
+            </span>
+          )}
+        </>
       ) : (
-        <input
-          {...register(label, { required: true })}
-          type={type}
-          placeholder={placeholder}
-          id={label}
-          className="ring-1 ring-black"
-        />
+        <>
+          <input
+            {...register(label, { required: 'Required', ...registerConfig })}
+            type={type}
+            placeholder={placeholder}
+            id={label}
+            className="ring-1 ring-black"
+          />
+          {error && (
+            <span className="text-xl" role="alert">
+              {error.message}
+            </span>
+          )}
+        </>
       )}
     </div>
   );

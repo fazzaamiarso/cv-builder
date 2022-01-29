@@ -37,7 +37,7 @@ const EditForm = () => {
           {itemToEdit.sectionName === 'Summary' ? <Summary /> : null}
           {itemToEdit.sectionName === 'Education' ? <Education /> : null}
           {itemToEdit.sectionName === 'Work' ? <Work /> : null}
-          <button type="submit">submit</button>
+          <button type="submit">Save</button>
         </form>
       </FormProvider>
     </main>
