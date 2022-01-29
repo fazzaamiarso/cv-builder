@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable jest/no-commented-out-tests */
-import { render, screen, act, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { EditorContainer } from '../components/EditorContainer';
@@ -138,5 +138,33 @@ describe('Form', () => {
     //using roles make it easier to test components
     expect(errorMessages).toHaveLength(5);
     errorMessages.forEach(message => expect(message).toBeVisible());
+  });
+  it('Submit the form if value is valid', async () => {
+    render(
+      <MemoryRouter initialEntries={['/editor/add']}>
+        <App />
+      </MemoryRouter>,
+    );
+    userEvent.click(screen.getByRole('link', { name: /education/i }));
+
+    const institutionName = screen.getByLabelText(/institution/i);
+    const degreeName = screen.getByLabelText(/degree/i);
+    const fieldName = screen.getByLabelText(/field/i);
+    const fromName = screen.getByLabelText(/from/i);
+    const toName = screen.getByLabelText(/to/i);
+
+    userEvent.type(institutionName, 'MIT');
+    userEvent.type(degreeName, 'Bsc');
+    userEvent.type(fieldName, 'Software Engineering');
+
+    // userEvent doesnt have change event so we have to use fireEve
+    fireEvent.change(fromName, { target: { value: '2022-02' } });
+    fireEvent.change(toName, { target: { value: '2022-06' } });
+
+    userEvent.click(screen.getByRole('button', { name: /submit/i }));
+
+    const allTextBox = await screen.findAllByRole('textbox');
+    //must use wait for because the submit event's reset call is async, without it, will get the filled value because it is not resetted yet
+    allTextBox.forEach(textbox => expect(textbox).toHaveValue(''));
   });
 });

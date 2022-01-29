@@ -24,6 +24,12 @@ const Work = () => {
         placeholder="describe here"
         name="Work Description"
         type="textarea"
+        registerConfig={{
+          minLength: {
+            value: 20,
+            message: 'Description must be longer than 20 characters',
+          },
+        }}
       />
     </>
   );

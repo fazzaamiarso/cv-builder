@@ -11,7 +11,7 @@ const PersonalForm = () => {
         registerConfig={{
           minLength: {
             value: 2,
-            message: 'Name must be more than 2 characters',
+            message: 'Name must be more than 1 characters',
           },
         }}
       />
@@ -23,7 +23,7 @@ const PersonalForm = () => {
         registerConfig={{
           minLength: {
             value: 2,
-            message: 'Name must be more than 2 characters',
+            message: 'Name must be more than 1 characters',
           },
         }}
       />
