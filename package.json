@@ -11,6 +11,8 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
+    "@heroicons/react": "^1.0.5",
     "@react-pdf/renderer": "^2.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
