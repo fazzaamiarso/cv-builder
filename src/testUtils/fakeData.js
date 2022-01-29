@@ -11,7 +11,7 @@ const data = [
   {
     id: 'summary9327',
     sectionName: 'Summary',
-    summary: 'Hello all I love programming',
+    summary: 'I am a passionate learner and I love learning new things',
   },
   {
     degree: 'Bsc',
@@ -27,7 +27,8 @@ const data = [
     id: 'work6230',
     role: 'Data Scientist',
     sectionName: 'Work',
-    workDescription: 'I work at ms office',
+    workDescription:
+      'I work in microsoft teams. I mainly work with phyton and MySql',
     workFrom: '2022-02',
     workTo: '2022-12',
   },

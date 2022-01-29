@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
+import CVItem from './CVItem';
 
-const CVSettings = ({ sectionsAdded, onTogglePreview }) => {
+const CVSettings = ({ sectionsAdded, onTogglePreview, onRemoveItem }) => {
   const personalInfoItem = sectionsAdded.find(
     item => item.sectionName === 'Personal info',
   );
@@ -17,41 +17,54 @@ const CVSettings = ({ sectionsAdded, onTogglePreview }) => {
       <h2 className="text-lg font-bold">CV Settings</h2>
       <p className="">Lorem ipsum dolor sit amet</p>
       <ul className="flex flex-col">
+        {sectionsAdded.length === 0 ? (
+          <p className="">Ooops.. there is no section added yet.</p>
+        ) : null}
         {personalInfoItem ? (
-          <li>
-            <Link to={`/editor/edit/${personalInfoItem.id}`}>
-              {personalInfoItem.firstName}
-            </Link>
-          </li>
+          <CVItem
+            key={personalInfoItem.id}
+            id={personalInfoItem.id}
+            displayText={personalInfoItem.firstName}
+            onRemoveItem={onRemoveItem}
+          />
         ) : null}
         {summaryItem ? (
-          <li>
-            <Link to={`/editor/edit/${summaryItem.id}`}>Summary</Link>
-          </li>
+          <CVItem
+            key={summaryItem.id}
+            id={summaryItem.id}
+            displayText={'summary'}
+            onRemoveItem={onRemoveItem}
+          />
         ) : null}
         {educationsItem.length === 0 ? null : (
-          <li>
+          <li key="educationItem">
             <div>Education</div>
-            <ul>
+            <ul data-testid="educationList">
               {educationsItem.map(item => {
                 return (
-                  <li key={item.id} data-testid="educationItem">
-                    <Link to={`/editor/edit/${item.id}`}>Education Item</Link>
-                  </li>
+                  <CVItem
+                    key={item.id}
+                    id={item.id}
+                    displayText={item.institution}
+                    onRemoveItem={onRemoveItem}
+                  />
                 );
               })}
             </ul>
           </li>
         )}
         {worksItem.length === 0 ? null : (
-          <li>
+          <li key="workItem">
             <div>Work</div>
-            <ul>
+            <ul data-testid="workList">
               {worksItem.map(item => {
                 return (
-                  <li key={item.id} data-testid="workItem">
-                    <Link to={`/editor/edit/${item.id}`}>{item.role}</Link>
-                  </li>
+                  <CVItem
+                    key={item.id}
+                    id={item.id}
+                    displayText={item.role}
+                    onRemoveItem={onRemoveItem}
+                  />
                 );
               })}
             </ul>
