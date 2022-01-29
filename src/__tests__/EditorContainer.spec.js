@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable jest/no-commented-out-tests */
-import { render, screen, act } from '@testing-library/react';
+import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
+import { EditorContainer } from '../components/EditorContainer';
 import App from '../App';
 
 describe('Editor Container', () => {
@@ -52,6 +53,10 @@ describe('Editor Container', () => {
 
     const submitButton = screen.getByRole('button', { name: /submit/i });
     userEvent.click(submitButton);
+
+    const allTextBox = await screen.findAllByRole('textbox');
+    //must use wait for because the submit event's reset call is async, without it, will get the filled value because it is not resetted yet
+    allTextBox.forEach(textbox => expect(textbox).toHaveValue(''));
 
     // react-hook-form onSubmit is always asynchronous
     expect(
@@ -120,7 +125,18 @@ describe('Editor Container', () => {
 });
 
 describe('Form', () => {
-  it('Happy path', () => {
-    expect(true).toBe(true);
+  it('Show required error messages if no value passed to textbox', async () => {
+    render(
+      <MemoryRouter initialEntries={['/editor/add']}>
+        <App />
+      </MemoryRouter>,
+    );
+
+    userEvent.click(screen.getByRole('button', { name: /submit/i }));
+
+    const errorMessages = await screen.findAllByRole('alert');
+    //using roles make it easier to test components
+    expect(errorMessages).toHaveLength(5);
+    errorMessages.forEach(message => expect(message).toBeVisible());
   });
 });
