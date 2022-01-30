@@ -36,14 +36,18 @@ const EditorContainer = () => {
   };
 
   return (
-    <main className="w-screen mt-10 px-10 flex justify-between gap-4 ">
-      <SectionSelector onSelectSection={setCurrentSection} />
+    <main className="w-screen mt-10 mb-20  px-10 grid grid-cols-4 gap-12  ">
+      <SectionSelector
+        onSelectSection={setCurrentSection}
+        currentSection={currentSection}
+      />
       <Outlet
         context={{
           currentSection,
           onAddInput: handleAddInput,
           sectionsAdded,
           onUpdateInput: handleUpdateInput,
+          onRemoveItem: handleRemoveItem,
         }}
       />
       <CVSettings
@@ -51,7 +55,9 @@ const EditorContainer = () => {
         onTogglePreview={handleToggle}
         onRemoveItem={handleRemoveItem}
       />
-      {showPreview ? <PDF sectionsAdded={sectionsAdded} /> : null}
+      {showPreview ? (
+        <PDF sectionsAdded={sectionsAdded} onClosePreview={handleToggle} />
+      ) : null}
     </main>
   );
 };

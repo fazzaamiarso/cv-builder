@@ -60,7 +60,7 @@ describe('Editor Container', () => {
 
     // react-hook-form onSubmit is always asynchronous
     expect(
-      await screen.findByRole('link', { name: fakeInput.firstName }),
+      await screen.findByRole('link', { name: /personal info/i }),
     ).toBeInTheDocument();
   });
 
@@ -99,7 +99,7 @@ describe('Editor Container', () => {
     userEvent.click(submitButton);
 
     const addedSection = await screen.findByRole('link', {
-      name: fakeInput.firstName,
+      name: /personal info/i,
     });
     userEvent.click(addedSection);
 
@@ -112,11 +112,6 @@ describe('Editor Container', () => {
     const saveButton = screen.getByRole('button', { name: /save/i });
     userEvent.click(saveButton);
 
-    expect(
-      await screen.findByRole('link', {
-        name: 'Mamen',
-      }),
-    ).toBeInTheDocument();
     expect(
       //using findBy or getBy will throw error immediately and cant be asserted
       screen.queryByRole('link', { name: fakeInput.firstName }),

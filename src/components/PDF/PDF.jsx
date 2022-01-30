@@ -1,18 +1,21 @@
 import React from 'react';
 import pdf from '@react-pdf/renderer';
+import WorkItem from './WorkItem';
+import EducationItem from './EducationItem';
 const { StyleSheet, Document, Page, View, Text } = pdf;
 // Create styles
 const styles = StyleSheet.create({
   page: {
     display: 'flex',
+    gap: '4rem',
     padding: '1rem',
-    // height: '100vh',
-    // position: 'absolute',
-    // zIndex: 10,
-    // top: 0,
-    // backgroundColor: 'white',
-    // left: '50%',
-    // transform: 'translateX(-50%)',
+    height: '100%',
+    position: 'absolute',
+    zIndex: 10,
+    top: 0,
+    backgroundColor: 'white',
+    left: '50%',
+    transform: 'translateX(-50%)',
   },
   header: {
     display: 'flex',
@@ -42,6 +45,7 @@ const styles = StyleSheet.create({
     fontWeight: 'semibold',
   },
   section: {
+    marginTop: '1rem',
     display: 'flex',
     flexDirection: 'column',
   },
@@ -52,7 +56,7 @@ const styles = StyleSheet.create({
 });
 
 // Create Document Component
-const MyDocument = ({ sectionsAdded }) => {
+const MyDocument = ({ sectionsAdded, onClosePreview }) => {
   const personalInfoItem = sectionsAdded.find(
     item => item.sectionName === 'Personal info',
   );
@@ -65,45 +69,87 @@ const MyDocument = ({ sectionsAdded }) => {
   const worksItem = sectionsAdded.filter(item => item.sectionName === 'Work');
 
   return (
-    <Document>
-      <Page size="A4" style={styles.page}>
-        <View style={styles.sidebar}>
-          <Text style={styles.name}>
-            {personalInfoItem?.firstName ?? 'Anonymous'}{' '}
-          </Text>
-          <View style={styles.info}>
-            <Text style={styles.infoItem}>8332129999</Text>
-            <Text style={styles.infoItem}>Oak wood drive way 13</Text>
-            <Text style={styles.infoItem}>Zhongli-Pappy-Daddy@gmail.com</Text>
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.heading}>Education</Text>
-            <View style={styles.sectionItem}>
-              <Text style={styles.subHeading}>Boston University</Text>
-              <Text style={styles.text}>BSc in Computer Science</Text>
-              <Text style={styles.text}>Oct 2012 - May 2020</Text>
-            </View>
-          </View>
-        </View>
-        <View style={styles.rightContent}>
-          <View style={styles.summary}>
-            <Text>Summary</Text>
-            <Text>Lorem ipsum dolor sit amet</Text>
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.heading}>Work Experience</Text>
-            <View style={styles.sectionItem}>
-              <Text style={styles.subHeading}>Vago Mundo</Text>
-              <Text style={styles.text}>Genshin Impact</Text>
-              <Text style={styles.text}>Oct 2012 - Present</Text>
-              <Text style={styles.text}>
-                I am a Geo element wielder and I am a Sugar Daddy
+    <>
+      <div
+        onClick={onClosePreview}
+        className="fixed z-8 inset-0 bg-black opacity-30 "
+      ></div>
+      <Document>
+        <Page size="A4" style={styles.page}>
+          <View style={styles.sidebar}>
+            <Text style={styles.name}>
+              {personalInfoItem?.firstName ?? '[Your name]'}
+            </Text>
+            <View style={styles.info}>
+              <Text style={styles.infoItem}>
+                {personalInfoItem?.phoneNumber ?? '[Your phone number]'}
+              </Text>
+              <Text style={styles.infoItem}>
+                {personalInfoItem?.address ?? '[Your address]'}
+              </Text>
+              <Text style={styles.infoItem}>
+                {personalInfoItem?.email ?? '[Your email address]'}
               </Text>
             </View>
+            <View style={styles.section}>
+              <Text style={styles.heading}>Education</Text>
+              {educationsItem.length === 0 ? (
+                <EducationItem
+                  degree="[Degree]"
+                  studyFrom="[study from]"
+                  studyTo="[study to]"
+                  institution="[Institution name]"
+                  fieldOfStudy="[Field of study]"
+                />
+              ) : null}
+              {educationsItem.map(item => {
+                return (
+                  <EducationItem
+                    key={item.id}
+                    degree={item.degree}
+                    studyFrom={item.studyFrom}
+                    studyTo={item.studyTo}
+                    institution={item.institution}
+                    fieldOfStudy={item.fieldOfStudy}
+                  />
+                );
+              })}
+            </View>
           </View>
-        </View>
-      </Page>
-    </Document>
+          <View style={styles.rightContent}>
+            <View style={styles.section}>
+              <Text style={styles.heading}>Summary</Text>
+              <Text>{summaryItem?.summary ?? '[Your summary]'}</Text>
+            </View>
+            <View style={styles.section}>
+              <Text style={styles.heading}>Work Experience</Text>
+              {worksItem.length === 0 ? (
+                <WorkItem
+                  role="[Role]"
+                  company="[Company name]"
+                  workDescription="[Work description]"
+                  workFrom="[Work from]"
+                  workTo="[Work to]"
+                />
+              ) : null}
+              {worksItem.map(item => {
+                return (
+                  <WorkItem
+                    key={item.id}
+                    id={item.id}
+                    role={item.role}
+                    company={item.company}
+                    workDescription={item.workDescription}
+                    workFrom={item.workFrom}
+                    workTo={item.workTo}
+                  />
+                );
+              })}
+            </View>
+          </View>
+        </Page>
+      </Document>
+    </>
   );
 };
 

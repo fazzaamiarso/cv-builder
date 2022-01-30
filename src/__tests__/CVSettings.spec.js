@@ -22,23 +22,6 @@ it('render the right structure', () => {
   expect(within(workList).getAllByRole('listitem')).toHaveLength(1);
 });
 
-it('delete a list item', () => {
-  const mockRemove = jest.fn();
-  //to test component using stuff from react-router must render the router as well
-  render(<CVSettings sectionsAdded={fakeData} onRemoveItem={mockRemove} />, {
-    wrapper: MemoryRouter,
-  });
-
-  const educationList = within(
-    screen.getByTestId('educationList'),
-  ).getAllByRole('listitem');
-
-  expect(educationList).toHaveLength(2);
-
-  userEvent.click(within(educationList[0]).getByRole('button'));
-
-  expect(mockRemove).toHaveBeenCalledTimes(1);
-});
 it('render empty state if no item stored', () => {
   //to test component using stuff from react-router must render the router as well
   render(<CVSettings sectionsAdded={[]} />, {

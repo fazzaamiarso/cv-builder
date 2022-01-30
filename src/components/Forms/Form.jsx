@@ -22,8 +22,8 @@ const Form = () => {
   };
 
   return (
-    <main className="flex flex-col gap-4 bg-white p-6 shadow-lg">
-      <h2 className="text-xl font-bold">{currentSection}</h2>
+    <main className="flex flex-col col-span-2 gap-4 bg-white p-6 shadow-lg rounded-sm">
+      <h2 className="text-2xl font-bold">{currentSection}</h2>
       <FormProvider {...formMethods}>
         <form
           onSubmit={formMethods.handleSubmit(submitHandler)}

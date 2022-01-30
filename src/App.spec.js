@@ -21,9 +21,8 @@ it('render the right page if page found', () => {
     screen.getByRole('heading', { name: /fill section/i }),
   ).toBeInTheDocument();
   expect(screen.getByRole('link', { name: /education/i })).toBeInTheDocument();
-  expect(
-    screen.getByRole('link', { name: /personal info/i }),
-  ).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /personal/i })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /work/i })).toBeInTheDocument();
 });
 
 it('can go back home if page not found', () => {
