@@ -55,5 +55,10 @@
       "prettier --write",
       "yarn test --watchAll=false --bail --findRelatedTests"
     ]
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
 }
