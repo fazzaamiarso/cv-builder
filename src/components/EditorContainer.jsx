@@ -2,7 +2,6 @@ import SectionSelector from './SectionSelector';
 import { useState } from 'react';
 import CVSettings from './CVSettings/CVSettings';
 import { Outlet, useNavigate } from 'react-router-dom';
-import PDF from './PDF/PDF';
 
 const EditorContainer = () => {
   const navigate = useNavigate();
@@ -55,9 +54,6 @@ const EditorContainer = () => {
         onTogglePreview={handleToggle}
         onRemoveItem={handleRemoveItem}
       />
-      {showPreview ? (
-        <PDF sectionsAdded={sectionsAdded} onClosePreview={handleToggle} />
-      ) : null}
     </main>
   );
 };
