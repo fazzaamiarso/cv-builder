@@ -22,15 +22,23 @@ const Form = () => {
   };
 
   return (
-    <main className="">
-      <h2 className="text-lg font-bold">{currentSection}</h2>
+    <main className="flex flex-col col-span-2 gap-4 bg-white p-6 shadow-lg rounded-sm">
+      <h2 className="text-2xl font-bold">{currentSection}</h2>
       <FormProvider {...formMethods}>
-        <form onSubmit={formMethods.handleSubmit(submitHandler)}>
+        <form
+          onSubmit={formMethods.handleSubmit(submitHandler)}
+          className="flex flex-col gap-4"
+        >
           {currentSection === 'Personal info' ? <PersonalForm /> : null}
           {currentSection === 'Summary' ? <Summary /> : null}
           {currentSection === 'Education' ? <Education /> : null}
           {currentSection === 'Work' ? <Work /> : null}
-          <button type="submit">submit</button>
+          <button
+            type="submit"
+            className="mt-2 bg-primary-purple text-white self-end w-max px-4 py-1 rounded-sm text-md"
+          >
+            Submit
+          </button>
         </form>
       </FormProvider>
     </main>

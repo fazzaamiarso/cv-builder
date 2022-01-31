@@ -3,30 +3,32 @@ import Input from './Input';
 const PersonalForm = () => {
   return (
     <>
-      <Input
-        label="firstName"
-        placeholder="John"
-        name="First Name"
-        type="text"
-        registerConfig={{
-          minLength: {
-            value: 2,
-            message: 'Name must be more than 1 characters',
-          },
-        }}
-      />
-      <Input
-        label="lastName"
-        placeholder="Doe"
-        name="Last Name"
-        type="text"
-        registerConfig={{
-          minLength: {
-            value: 2,
-            message: 'Name must be more than 1 characters',
-          },
-        }}
-      />
+      <div className="flex gap-8">
+        <Input
+          label="firstName"
+          placeholder="John"
+          name="First Name"
+          type="text"
+          registerConfig={{
+            minLength: {
+              value: 2,
+              message: 'Name must be more than 1 characters',
+            },
+          }}
+        />
+        <Input
+          label="lastName"
+          placeholder="Doe"
+          name="Last Name"
+          type="text"
+          registerConfig={{
+            minLength: {
+              value: 2,
+              message: 'Name must be more than 1 characters',
+            },
+          }}
+        />
+      </div>
 
       <Input
         label="phoneNumber"

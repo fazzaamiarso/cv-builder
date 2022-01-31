@@ -4,6 +4,7 @@ import EditForm from './components/Forms/EditForm';
 
 import { Routes, Route, Link } from 'react-router-dom';
 import NotFoundPage from './NotFoundPage';
+import PageLayout from './components/PageLayout';
 
 function App() {
   return (
@@ -19,9 +20,11 @@ function App() {
           </>
         }
       />
-      <Route path="/editor" element={<EditorContainer />}>
-        <Route path="add" element={<Form />} />
-        <Route path="edit/:dataId" element={<EditForm />} />
+      <Route element={<PageLayout />}>
+        <Route path="/editor" element={<EditorContainer />}>
+          <Route path="add" element={<Form />} />
+          <Route path="edit/:dataId" element={<EditForm />} />
+        </Route>
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

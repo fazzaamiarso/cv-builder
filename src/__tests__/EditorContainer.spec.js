@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable jest/no-commented-out-tests */
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
-import { EditorContainer } from '../components/EditorContainer';
 import App from '../App';
 
 describe('Editor Container', () => {
@@ -60,7 +59,7 @@ describe('Editor Container', () => {
 
     // react-hook-form onSubmit is always asynchronous
     expect(
-      await screen.findByRole('link', { name: fakeInput.firstName }),
+      await screen.findByRole('link', { name: /personal info/i }),
     ).toBeInTheDocument();
   });
 
@@ -99,7 +98,7 @@ describe('Editor Container', () => {
     userEvent.click(submitButton);
 
     const addedSection = await screen.findByRole('link', {
-      name: fakeInput.firstName,
+      name: /personal info/i,
     });
     userEvent.click(addedSection);
 
@@ -111,16 +110,62 @@ describe('Editor Container', () => {
 
     const saveButton = screen.getByRole('button', { name: /save/i });
     userEvent.click(saveButton);
+    //this save event will throw act() error because it causes state update that werent expected when the test end there.
 
+    //apparently it work because it cause the component to reerender and the dave is async
     expect(
       await screen.findByRole('link', {
-        name: 'Mamen',
+        name: /personal info/i,
       }),
     ).toBeInTheDocument();
+    //using findBy or getBy will throw error immediately and cant be asserted
+  });
+
+  it('Delete an added section', async () => {
+    const fakeInput = {
+      firstName: 'Bambang',
+      lastName: 'Susanto',
+      phoneNumber: '08221111111',
+      email: 'bambang.susanto@example.com',
+      address: '42 oakwood drive',
+    };
+
+    render(
+      <MemoryRouter initialEntries={['/editor/add']}>
+        <App />
+      </MemoryRouter>,
+    );
+
+    const sectionButton = screen.getByRole('link', { name: /personal/i });
+    userEvent.click(sectionButton);
+
+    const firstName = screen.getByLabelText(/first name/i);
+    const lastName = screen.getByLabelText(/last name/i);
+    const phoneNumber = screen.getByLabelText(/phone number/i);
+    const email = screen.getByLabelText(/email address/i);
+    const address = screen.getByLabelText(/^Address$/);
+    //element above will be unmounted by route change
+
+    userEvent.type(firstName, fakeInput.firstName);
+    userEvent.type(lastName, fakeInput.lastName);
+    userEvent.type(phoneNumber, fakeInput.phoneNumber);
+    userEvent.type(email, fakeInput.email);
+    userEvent.type(address, fakeInput.address);
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    userEvent.click(submitButton);
+
+    const addedSection = await screen.findByRole('link', {
+      name: /personal info/i,
+    });
+    userEvent.click(addedSection);
+
+    const deleteButton = screen.getByRole('button', { name: /delete/i });
+    act(() => userEvent.click(deleteButton));
+
     expect(
-      //using findBy or getBy will throw error immediately and cant be asserted
-      screen.queryByRole('link', { name: fakeInput.firstName }),
-    ).not.toBeInTheDocument();
+      screen.getByText(/there is no section added yet/i),
+    ).toBeInTheDocument();
   });
 });
 
