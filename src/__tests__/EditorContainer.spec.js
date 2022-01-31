@@ -161,7 +161,7 @@ describe('Editor Container', () => {
     userEvent.click(addedSection);
 
     const deleteButton = screen.getByRole('button', { name: /delete/i });
-    act(() => userEvent.click(deleteButton));
+    userEvent.click(deleteButton);
 
     expect(
       screen.getByText(/there is no section added yet/i),
