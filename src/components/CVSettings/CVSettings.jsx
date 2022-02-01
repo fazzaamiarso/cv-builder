@@ -2,18 +2,18 @@ import CVItem from './CVItem';
 import { Link } from 'react-router-dom';
 import { EmojiSadIcon } from '@heroicons/react/outline';
 
-const CVSettings = ({ sectionsAdded, onTogglePreview }) => {
-  const personalInfoItem = sectionsAdded.find(
-    item => item.sectionName === 'Personal info',
-  );
-  const summaryItem = sectionsAdded.find(
-    item => item.sectionName === 'Summary',
-  );
-  const educationsItem = sectionsAdded.filter(
-    item => item.sectionName === 'Education',
-  );
-  const worksItem = sectionsAdded.filter(item => item.sectionName === 'Work');
+const findSingleSection = (sectionsArray, sectionName) => {
+  return sectionsArray.find(item => item.sectionName === sectionName);
+};
+const filterSections = (sectionsArray, sectionName) => {
+  return sectionsArray.filter(item => item.sectionName === sectionName);
+};
 
+const CVSettings = ({ sectionsAdded, onTogglePreview }) => {
+  const personalInfoItem = findSingleSection(sectionsAdded, 'Personal info');
+  const summaryItem = findSingleSection(sectionsAdded, 'Summary');
+  const educationsItem = filterSections(sectionsAdded, 'Education');
+  const worksItem = filterSections(sectionsAdded, 'Work');
   return (
     <section className="flex flex-col shadow-lg bg-white p-6 rounded-sm max-h-[30rem]">
       <h2 className="text-2xl font-bold">CV Settings</h2>
