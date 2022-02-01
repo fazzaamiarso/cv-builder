@@ -3,7 +3,7 @@ import Input from './Input';
 const PersonalForm = () => {
   return (
     <>
-      <div className="flex gap-8">
+      <div className="flex gap-8 ">
         <Input
           label="firstName"
           placeholder="John"

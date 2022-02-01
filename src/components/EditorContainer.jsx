@@ -2,7 +2,8 @@ import SectionSelector from './SectionSelector';
 import { useState } from 'react';
 import CVSettings from './CVSettings/CVSettings';
 import { Outlet, useNavigate } from 'react-router-dom';
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const EditorContainer = () => {
   const navigate = useNavigate();
   const [currentSection, setCurrentSection] = useState('Personal info');
@@ -21,10 +22,12 @@ const EditorContainer = () => {
       return newArr;
     });
     navigate('/editor/add');
+    toast.info('Deleted a section!', { hideProgressBar: false });
   };
 
   const handleAddInput = newInput => {
     setSectionsAdded(prevState => [...prevState, newInput]);
+    toast.success('Submit success!', { hideProgressBar: false });
   };
   const handleUpdateInput = (idx, newValue) => {
     setSectionsAdded(prevState => {
@@ -32,6 +35,7 @@ const EditorContainer = () => {
       newArr[idx] = newValue;
       return newArr;
     });
+    toast.success('Changes saved!', { hideProgressBar: false });
   };
 
   return (

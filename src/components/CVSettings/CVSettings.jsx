@@ -1,13 +1,7 @@
 import CVItem from './CVItem';
 import { Link } from 'react-router-dom';
 import { EmojiSadIcon } from '@heroicons/react/outline';
-
-const findSingleSection = (sectionsArray, sectionName) => {
-  return sectionsArray.find(item => item.sectionName === sectionName);
-};
-const filterSections = (sectionsArray, sectionName) => {
-  return sectionsArray.filter(item => item.sectionName === sectionName);
-};
+import { findSingleSection, filterSections } from '../../utils/formUtils';
 
 const CVSettings = ({ sectionsAdded, onTogglePreview }) => {
   const personalInfoItem = findSingleSection(sectionsAdded, 'Personal info');

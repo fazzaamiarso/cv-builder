@@ -1,6 +1,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable jest/no-commented-out-tests */
-import { screen, fireEvent } from '@testing-library/react';
+import {
+  screen,
+  fireEvent,
+  within,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from '../testUtils/TestUtils';
 import fakeInput from '../testUtils/fakeInput';
@@ -39,6 +44,9 @@ describe('Editor Container', () => {
     const allTextBox = await screen.findAllByRole('textbox');
     //must use wait for because the submit event's reset call is async, without it, will get the filled value because it is not resetted yet
     allTextBox.forEach(textbox => expect(textbox).toHaveValue(''));
+
+    const toast = within(await screen.findByRole('alert'));
+    expect(toast.getByText(/submit success/i)).toBeInTheDocument();
 
     // react-hook-form onSubmit is always asynchronous
     expect(
@@ -80,6 +88,7 @@ describe('Editor Container', () => {
     //this save event will throw act() error because it causes state update that werent expected when the test end there.
 
     //apparently it work because it cause the component to reerender and the dave is async
+    expect(await screen.findByText(/changes saved/i)).toBeInTheDocument();
     expect(
       await screen.findByRole('link', {
         name: /personal info/i,
@@ -114,8 +123,55 @@ describe('Editor Container', () => {
 
     userEvent.click(screen.getByRole('button', { name: /delete/i }));
 
+    //the order of assertion matter apparently
     expect(
       screen.getByText(/there is no section added yet/i),
+    ).toBeInTheDocument();
+    expect(await screen.findByText(/deleted a section/i)).toBeInTheDocument();
+  });
+
+  it('Can only add 1 personal info and summary', async () => {
+    userEvent.click(screen.getByTitle(/personal/i));
+
+    const firstName = screen.getByLabelText(/first name/i);
+    const lastName = screen.getByLabelText(/last name/i);
+    const phoneNumber = screen.getByLabelText(/phone number/i);
+    const email = screen.getByLabelText(/email address/i);
+    const address = screen.getByLabelText(/^Address$/);
+
+    const { personal } = fakeInput;
+    userEvent.type(firstName, personal.firstName);
+    userEvent.type(lastName, personal.lastName);
+    userEvent.type(phoneNumber, personal.phoneNumber);
+    userEvent.type(email, personal.email);
+    userEvent.type(address, personal.address);
+    userEvent.click(screen.getByRole('button', { name: /submit/i }));
+
+    //must use await because submit is async
+    userEvent.type(
+      await screen.findByLabelText(/first name/i),
+      personal.firstName,
+    );
+    userEvent.type(
+      await screen.findByLabelText(/last name/i),
+      personal.lastName,
+    );
+    userEvent.type(
+      await screen.findByLabelText(/phone number/i),
+      personal.phoneNumber,
+    );
+    userEvent.type(
+      await screen.findByLabelText(/email address/i),
+      personal.email,
+    );
+    userEvent.type(
+      await screen.findByLabelText(/^Address$/i),
+      personal.address,
+    );
+    userEvent.click(screen.getByRole('button', { name: /submit/i }));
+
+    expect(
+      await screen.findByText(/section already exist/i),
     ).toBeInTheDocument();
   });
 });
@@ -150,6 +206,32 @@ describe('Form', () => {
 
     userEvent.click(screen.getByRole('button', { name: /submit/i }));
 
+    const allTextBox = await screen.findAllByRole('textbox');
+    //must use wait for because the submit event's reset call is async, without it, will get the filled value because it is not resetted yet
+    allTextBox.forEach(textbox => expect(textbox).toHaveValue(''));
+  });
+  it('Clear the form if clear button is clicked', async () => {
+    renderWithRouter(<App />, ['/editor/add']);
+    userEvent.click(screen.getByTitle(/education/i));
+
+    const institutionName = screen.getByLabelText(/institution/i);
+    const degreeName = screen.getByLabelText(/degree/i);
+    const fieldName = screen.getByLabelText(/field/i);
+    const fromName = screen.getByLabelText(/from/i);
+    const toName = screen.getByLabelText(/to/i);
+
+    const { education } = fakeInput;
+    userEvent.type(institutionName, education.institution);
+    userEvent.type(degreeName, education.degree);
+    userEvent.type(fieldName, education.fieldOfStudy);
+
+    // userEvent doesnt have change event so we have to use fireEvent
+    fireEvent.change(fromName, { target: { value: education.studyFrom } });
+    fireEvent.change(toName, { target: { value: education.studyTo } });
+
+    userEvent.click(screen.getByRole('button', { name: /clear/i }));
+
+    expect(await screen.findByText(/form cleared/i)).toBeInTheDocument();
     const allTextBox = await screen.findAllByRole('textbox');
     //must use wait for because the submit event's reset call is async, without it, will get the filled value because it is not resetted yet
     allTextBox.forEach(textbox => expect(textbox).toHaveValue(''));
