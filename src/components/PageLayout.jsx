@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 const PageLayout = () => {
   return (
@@ -7,6 +8,14 @@ const PageLayout = () => {
         <div className="w-screen h-24 bg-[#502ACD]"></div>
       </div>
       <Outlet />
+      <ToastContainer
+        role="alert"
+        hideProgressBar={true}
+        autoClose={2000}
+        pauseOnFocusLoss={false}
+        pauseOnHover={false}
+        bodyClassName="text-gray-800"
+      />
     </>
   );
 };

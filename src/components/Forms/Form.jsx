@@ -1,15 +1,28 @@
 import { useForm, FormProvider } from 'react-hook-form';
+import Work from './Work';
 import Summary from './Summary';
 import PersonalForm from './PersonalForm';
 import Education from './Education';
 import { useOutletContext } from 'react-router-dom';
-import Work from './Work';
+import { findSingleSection } from '../../utils/formUtils';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Form = () => {
-  const formMethods = useForm({ shouldUnregister: true });
-  const { currentSection, onAddInput } = useOutletContext();
+  const formMethods = useForm({
+    shouldUnregister: true,
+  });
+  const { currentSection, onAddInput, sectionsAdded } = useOutletContext();
 
   const submitHandler = formValues => {
+    if (findSingleSection(sectionsAdded, currentSection)) {
+      toast.error('Section already exist, please kindly edit to make change!', {
+        hideProgressBar: false,
+        autoClose: 4000,
+      });
+      return;
+    }
+
     const newInput = {
       ...formValues,
       sectionName: currentSection,
@@ -19,6 +32,14 @@ const Form = () => {
     };
     onAddInput(newInput);
     formMethods.reset();
+  };
+
+  const handleClear = () => {
+    toast.info('Form cleared!', {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+    formMethods.reset();
+    formMethods.clearErrors();
   };
 
   return (
@@ -33,12 +54,21 @@ const Form = () => {
           {currentSection === 'Summary' ? <Summary /> : null}
           {currentSection === 'Education' ? <Education /> : null}
           {currentSection === 'Work' ? <Work /> : null}
-          <button
-            type="submit"
-            className="mt-2 bg-primary-purple text-white self-end w-max px-4 py-1 rounded-sm text-md"
-          >
-            Submit
-          </button>
+          <div className="flex self-end mt-4 gap-4 items-center">
+            <button
+              onClick={handleClear}
+              className=" ring-primary-purple ring-1 text-primary-purple w-max px-4 py-1 rounded-sm text-md"
+              type="button" //prevent submit
+            >
+              Clear
+            </button>
+            <button
+              type="submit"
+              className=" bg-primary-purple text-white  w-max px-4 py-1 rounded-sm text-md"
+            >
+              Submit
+            </button>
+          </div>
         </form>
       </FormProvider>
     </main>
