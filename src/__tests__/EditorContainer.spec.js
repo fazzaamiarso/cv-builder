@@ -2,9 +2,9 @@
 /* eslint-disable jest/no-commented-out-tests */
 import { screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import App from '../App';
 import { renderWithRouter } from '../testUtils/TestUtils';
 import fakeInput from '../testUtils/fakeInput';
+import App from '../App';
 
 describe('Editor Container', () => {
   beforeEach(() => {
@@ -12,14 +12,14 @@ describe('Editor Container', () => {
   });
 
   it('render the correct form for selected section', () => {
-    userEvent.click(screen.getByRole('link', { name: /education/i }));
+    userEvent.click(screen.getByTitle(/education/i)); //get svg by title
     expect(
       screen.getByRole('heading', { name: /education/i }),
     ).toBeInTheDocument();
   });
 
   it('Add the filled section form to arrangement column', async () => {
-    userEvent.click(screen.getByRole('link', { name: /personal/i }));
+    userEvent.click(screen.getByTitle(/personal/i));
 
     const firstName = screen.getByLabelText(/first name/i);
     const lastName = screen.getByLabelText(/last name/i);
@@ -47,7 +47,7 @@ describe('Editor Container', () => {
   });
 
   it('Able to edit form by clicking added section in arrangement column', async () => {
-    userEvent.click(screen.getByRole('link', { name: /personal/i }));
+    userEvent.click(screen.getByTitle(/personal/i));
 
     const firstName = screen.getByLabelText(/first name/i);
     const lastName = screen.getByLabelText(/last name/i);
@@ -89,7 +89,7 @@ describe('Editor Container', () => {
   });
 
   it('Delete an added section', async () => {
-    userEvent.click(screen.getByRole('link', { name: /personal/i }));
+    userEvent.click(screen.getByTitle(/personal/i));
 
     const firstName = screen.getByLabelText(/first name/i);
     const lastName = screen.getByLabelText(/last name/i);
@@ -132,7 +132,7 @@ describe('Form', () => {
   });
   it('Submit the form if value is valid', async () => {
     renderWithRouter(<App />, ['/editor/add']);
-    userEvent.click(screen.getByRole('link', { name: /education/i }));
+    userEvent.click(screen.getByTitle(/education/i));
 
     const institutionName = screen.getByLabelText(/institution/i);
     const degreeName = screen.getByLabelText(/degree/i);
