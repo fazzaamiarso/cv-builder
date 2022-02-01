@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const SectionItem = ({
   sectionName,
@@ -7,8 +7,10 @@ const SectionItem = ({
   displayText,
   Icon,
 }) => {
+  const navigate = useNavigate();
   const handleSelect = () => {
     onSelected(sectionName);
+    navigate(`/editor/add`);
   };
 
   return (
@@ -18,10 +20,11 @@ const SectionItem = ({
       } `}
       onClick={handleSelect}
     >
-      <Icon className="h-8 text-primary-purple opacity-60" />
-      <Link to={`/editor/add`} className="text-center leading-none">
-        {displayText}
-      </Link>
+      <Icon
+        className="h-8 text-primary-purple opacity-60"
+        title={sectionName}
+      />
+      <p className="text-center leading-none">{displayText}</p>
     </li>
   );
 };

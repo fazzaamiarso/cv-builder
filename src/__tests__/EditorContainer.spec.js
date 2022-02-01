@@ -1,42 +1,25 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable jest/no-commented-out-tests */
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
+import { renderWithRouter } from '../testUtils/TestUtils';
+import fakeInput from '../testUtils/fakeInput';
 import App from '../App';
 
 describe('Editor Container', () => {
-  it('render the correct form for selected section', () => {
-    render(
-      <MemoryRouter initialEntries={['/editor/add']}>
-        <App />
-      </MemoryRouter>,
-    );
-    const sectionButton = screen.getByText(/education/i);
+  beforeEach(() => {
+    renderWithRouter(<App />, ['/editor/add']);
+  });
 
-    userEvent.click(sectionButton);
+  it('render the correct form for selected section', () => {
+    userEvent.click(screen.getByTitle(/education/i)); //get svg by title
     expect(
       screen.getByRole('heading', { name: /education/i }),
     ).toBeInTheDocument();
   });
 
   it('Add the filled section form to arrangement column', async () => {
-    const fakeInput = {
-      firstName: 'Bambang',
-      lastName: 'Susanto',
-      phoneNumber: '12345',
-      email: 'bambang.susanto@example.com',
-      address: '42 oakwood drive',
-    };
-
-    render(
-      <MemoryRouter initialEntries={['/editor/add']}>
-        <App />
-      </MemoryRouter>,
-    );
-
-    const sectionButton = screen.getByRole('link', { name: /personal/i });
-    userEvent.click(sectionButton);
+    userEvent.click(screen.getByTitle(/personal/i));
 
     const firstName = screen.getByLabelText(/first name/i);
     const lastName = screen.getByLabelText(/last name/i);
@@ -44,14 +27,14 @@ describe('Editor Container', () => {
     const email = screen.getByLabelText(/email address/i);
     const address = screen.getByLabelText(/^Address$/);
 
-    userEvent.type(firstName, fakeInput.firstName);
-    userEvent.type(lastName, fakeInput.lastName);
-    userEvent.type(phoneNumber, fakeInput.phoneNumber);
-    userEvent.type(email, fakeInput.email);
-    userEvent.type(address, fakeInput.address);
+    const { personal } = fakeInput;
+    userEvent.type(firstName, personal.firstName);
+    userEvent.type(lastName, personal.lastName);
+    userEvent.type(phoneNumber, personal.phoneNumber);
+    userEvent.type(email, personal.email);
+    userEvent.type(address, personal.address);
 
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    userEvent.click(submitButton);
+    userEvent.click(screen.getByRole('button', { name: /submit/i }));
 
     const allTextBox = await screen.findAllByRole('textbox');
     //must use wait for because the submit event's reset call is async, without it, will get the filled value because it is not resetted yet
@@ -64,22 +47,7 @@ describe('Editor Container', () => {
   });
 
   it('Able to edit form by clicking added section in arrangement column', async () => {
-    const fakeInput = {
-      firstName: 'Bambang',
-      lastName: 'Susanto',
-      phoneNumber: '12345',
-      email: 'bambang.susanto@example.com',
-      address: '42 oakwood drive',
-    };
-
-    render(
-      <MemoryRouter initialEntries={['/editor/add']}>
-        <App />
-      </MemoryRouter>,
-    );
-
-    const sectionButton = screen.getByRole('link', { name: /personal/i });
-    userEvent.click(sectionButton);
+    userEvent.click(screen.getByTitle(/personal/i));
 
     const firstName = screen.getByLabelText(/first name/i);
     const lastName = screen.getByLabelText(/last name/i);
@@ -88,14 +56,14 @@ describe('Editor Container', () => {
     const address = screen.getByLabelText(/^Address$/);
     //element above will be unmounted by route change
 
-    userEvent.type(firstName, fakeInput.firstName);
-    userEvent.type(lastName, fakeInput.lastName);
-    userEvent.type(phoneNumber, fakeInput.phoneNumber);
-    userEvent.type(email, fakeInput.email);
-    userEvent.type(address, fakeInput.address);
+    const { personal } = fakeInput;
+    userEvent.type(firstName, personal.firstName);
+    userEvent.type(lastName, personal.lastName);
+    userEvent.type(phoneNumber, personal.phoneNumber);
+    userEvent.type(email, personal.email);
+    userEvent.type(address, personal.address);
 
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    userEvent.click(submitButton);
+    userEvent.click(screen.getByRole('button', { name: /submit/i }));
 
     const addedSection = await screen.findByRole('link', {
       name: /personal info/i,
@@ -103,13 +71,12 @@ describe('Editor Container', () => {
     userEvent.click(addedSection);
 
     const addedfirstName = screen.getByLabelText(/first name/i);
-    expect(addedfirstName).toHaveValue(fakeInput.firstName);
+    expect(addedfirstName).toHaveValue(personal.firstName);
 
     userEvent.clear(addedfirstName);
     userEvent.type(addedfirstName, 'Mamen');
 
-    const saveButton = screen.getByRole('button', { name: /save/i });
-    userEvent.click(saveButton);
+    userEvent.click(screen.getByRole('button', { name: /save/i }));
     //this save event will throw act() error because it causes state update that werent expected when the test end there.
 
     //apparently it work because it cause the component to reerender and the dave is async
@@ -122,22 +89,7 @@ describe('Editor Container', () => {
   });
 
   it('Delete an added section', async () => {
-    const fakeInput = {
-      firstName: 'Bambang',
-      lastName: 'Susanto',
-      phoneNumber: '08221111111',
-      email: 'bambang.susanto@example.com',
-      address: '42 oakwood drive',
-    };
-
-    render(
-      <MemoryRouter initialEntries={['/editor/add']}>
-        <App />
-      </MemoryRouter>,
-    );
-
-    const sectionButton = screen.getByRole('link', { name: /personal/i });
-    userEvent.click(sectionButton);
+    userEvent.click(screen.getByTitle(/personal/i));
 
     const firstName = screen.getByLabelText(/first name/i);
     const lastName = screen.getByLabelText(/last name/i);
@@ -146,22 +98,21 @@ describe('Editor Container', () => {
     const address = screen.getByLabelText(/^Address$/);
     //element above will be unmounted by route change
 
-    userEvent.type(firstName, fakeInput.firstName);
-    userEvent.type(lastName, fakeInput.lastName);
-    userEvent.type(phoneNumber, fakeInput.phoneNumber);
-    userEvent.type(email, fakeInput.email);
-    userEvent.type(address, fakeInput.address);
+    const { personal } = fakeInput;
+    userEvent.type(firstName, personal.firstName);
+    userEvent.type(lastName, personal.lastName);
+    userEvent.type(phoneNumber, personal.phoneNumber);
+    userEvent.type(email, personal.email);
+    userEvent.type(address, personal.address);
 
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    userEvent.click(submitButton);
+    userEvent.click(screen.getByRole('button', { name: /submit/i }));
 
     const addedSection = await screen.findByRole('link', {
       name: /personal info/i,
     });
     userEvent.click(addedSection);
 
-    const deleteButton = screen.getByRole('button', { name: /delete/i });
-    userEvent.click(deleteButton);
+    userEvent.click(screen.getByRole('button', { name: /delete/i }));
 
     expect(
       screen.getByText(/there is no section added yet/i),
@@ -171,12 +122,7 @@ describe('Editor Container', () => {
 
 describe('Form', () => {
   it('Show required error messages if no value passed to textbox', async () => {
-    render(
-      <MemoryRouter initialEntries={['/editor/add']}>
-        <App />
-      </MemoryRouter>,
-    );
-
+    renderWithRouter(<App />, ['/editor/add']);
     userEvent.click(screen.getByRole('button', { name: /submit/i }));
 
     const errorMessages = await screen.findAllByRole('alert');
@@ -185,12 +131,8 @@ describe('Form', () => {
     errorMessages.forEach(message => expect(message).toBeVisible());
   });
   it('Submit the form if value is valid', async () => {
-    render(
-      <MemoryRouter initialEntries={['/editor/add']}>
-        <App />
-      </MemoryRouter>,
-    );
-    userEvent.click(screen.getByRole('link', { name: /education/i }));
+    renderWithRouter(<App />, ['/editor/add']);
+    userEvent.click(screen.getByTitle(/education/i));
 
     const institutionName = screen.getByLabelText(/institution/i);
     const degreeName = screen.getByLabelText(/degree/i);

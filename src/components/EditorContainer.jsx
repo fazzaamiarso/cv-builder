@@ -43,8 +43,8 @@ const EditorContainer = () => {
       <Outlet
         context={{
           currentSection,
-          onAddInput: handleAddInput,
           sectionsAdded,
+          onAddInput: handleAddInput,
           onUpdateInput: handleUpdateInput,
           onRemoveItem: handleRemoveItem,
         }}

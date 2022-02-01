@@ -1,13 +1,12 @@
-import { render, screen, within } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { screen, within } from '@testing-library/react';
 import CVSettings from '../components/CVSettings/CVSettings';
 import fakeData from '../testUtils/fakeData';
+import { renderWithRouter } from '../testUtils/TestUtils';
 
 it('render the right structure', () => {
   //to test component using stuff from react-router must render the router as well
-  render(<CVSettings sectionsAdded={fakeData} />, {
-    wrapper: MemoryRouter,
-  });
+  renderWithRouter(<CVSettings sectionsAdded={fakeData} />);
+
   expect(
     screen.getByRole('heading', { name: /cv setting/i, level: 2 }),
   ).toBeInTheDocument();
@@ -23,9 +22,7 @@ it('render the right structure', () => {
 
 it('render empty state if no item stored', () => {
   //to test component using stuff from react-router must render the router as well
-  render(<CVSettings sectionsAdded={[]} />, {
-    wrapper: MemoryRouter,
-  });
+  renderWithRouter(<CVSettings sectionsAdded={[]} />);
 
   expect(
     screen.getByText(/there is no section added yet/i),
