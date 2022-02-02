@@ -1,6 +1,7 @@
 import { useForm, FormProvider } from 'react-hook-form';
 import Summary from './Summary';
 import Work from './Work';
+import Photo from './Photo';
 import PersonalForm from './PersonalForm';
 import Education from './Education';
 import { useOutletContext, useParams } from 'react-router-dom';
@@ -44,6 +45,7 @@ const EditForm = () => {
           {itemToEdit.sectionName === 'Summary' ? <Summary /> : null}
           {itemToEdit.sectionName === 'Education' ? <Education /> : null}
           {itemToEdit.sectionName === 'Work' ? <Work /> : null}
+          {itemToEdit.sectionName === 'Photo' ? <Photo /> : null}
           <div className="flex self-end mt-4 gap-4">
             <button
               className=" ring-primary-purple ring-1 text-primary-purple w-max px-4 py-1 rounded-sm text-md"

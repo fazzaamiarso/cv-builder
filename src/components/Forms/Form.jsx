@@ -3,6 +3,7 @@ import Work from './Work';
 import Summary from './Summary';
 import PersonalForm from './PersonalForm';
 import Education from './Education';
+import Photo from './Photo';
 import { useOutletContext } from 'react-router-dom';
 import { findSingleSection } from '../../utils/formUtils';
 import { toast } from 'react-toastify';
@@ -57,6 +58,7 @@ const Form = () => {
           {currentSection === 'Summary' ? <Summary /> : null}
           {currentSection === 'Education' ? <Education /> : null}
           {currentSection === 'Work' ? <Work /> : null}
+          {currentSection === 'Photo' ? <Photo /> : null}
           <div className="flex self-end mt-4 gap-4 items-center">
             <button
               onClick={handleClear}
