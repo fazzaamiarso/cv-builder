@@ -15,7 +15,10 @@ const Form = () => {
   const { currentSection, onAddInput, sectionsAdded } = useOutletContext();
 
   const submitHandler = formValues => {
-    if (findSingleSection(sectionsAdded, currentSection)) {
+    if (
+      (currentSection === 'Personal info' || currentSection === 'Summary') &&
+      findSingleSection(sectionsAdded, currentSection)
+    ) {
       toast.error('Section already exist, please kindly edit to make change!', {
         hideProgressBar: false,
         autoClose: 4000,

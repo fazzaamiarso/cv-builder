@@ -6,15 +6,17 @@ const EducationItem = ({
   institution,
 }) => {
   return (
-    <li>
-      <h3 className="font-semibold">{`${
-        institution ?? '[institution name]'
-      }`}</h3>
+    <li className=" w-full">
+      <div className="flex justify-between">
+        <h3 className="font-semibold text-lg">{`${
+          institution ?? '[institution name]'
+        }`}</h3>
+        <p className="text-xs text-gray-700">{`${
+          studyFrom ?? '[study from]'
+        } - ${studyTo ?? '[study to]'}`}</p>
+      </div>
       <p className="">{`${degree ?? '[degree]'} in ${
         fieldOfStudy ?? '[field of study]'
-      }`}</p>
-      <p className="">{`${studyFrom ?? '[study from]'} - ${
-        studyTo ?? '[study to]'
       }`}</p>
     </li>
   );
