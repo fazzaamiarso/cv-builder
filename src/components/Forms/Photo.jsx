@@ -1,21 +1,22 @@
 import { useEffect, useState } from 'react';
-import { useController, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
 const Photo = () => {
-  const { control } = useFormContext();
-  const { field } = useController({ control, name: 'photo' });
+  const { register, watch } = useFormContext();
   const [image, setImage] = useState('');
+  const uploaded = watch('photo');
 
   useEffect(() => {
-    if (field.value) setImage(field.value);
-  }, [field]);
+    if (!uploaded || uploaded.length === 0) return;
+    readImageUploaded(uploaded[0]);
+  }, [uploaded]);
 
   const readImageUploaded = file => {
     const reader = new FileReader();
     reader.onload = e => {
       // attach event
-      setImage(e.target); //e.target is reader which is an instacnce of filereader
-      field.onChange(e.target);
+      setImage(e.target.result);
+      //e.target is reader which is an instacnce of filereader
     };
     reader.readAsDataURL(file); // trigger the event
   };
@@ -25,18 +26,19 @@ const Photo = () => {
   };
   return (
     <>
-      <div className="w-max h-max">
-        <img src={image.result} alt="user profile" />
-      </div>
+      {image && (
+        <div className="w-max h-max">
+          <img src={image} alt="user profile" />
+        </div>
+      )}
       <label htmlFor={'photo'} className="text-sm font-semibold">
         {'Photo'}
       </label>
       <input
-        value={image.name}
+        {...register('photo', { onChange: handleChange })}
         type="file"
         id="photo"
         accept="image/png, image/jpeg"
-        onChange={handleChange}
       />
     </>
   );

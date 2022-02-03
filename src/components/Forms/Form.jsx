@@ -35,6 +35,7 @@ const Form = () => {
       )}`,
     };
     onAddInput(newInput);
+    if ('photo' in formValues) return;
     formMethods.reset();
   };
 

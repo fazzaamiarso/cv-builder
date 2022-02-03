@@ -1,14 +1,28 @@
+import { useState, useEffect } from 'react';
 import { findSingleSection, filterSections } from '../../utils/formUtils';
 import EducationItem from './EducationItem';
 import WorkItem from './WorkItem';
 
 const Preview = ({ onClosePreview, sectionsAdded }) => {
+  const [imageUploaded, setImageUploaded] = useState('');
+  const readImageUploaded = file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      setImageUploaded(e.target.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  useEffect(() => {
+    const image = findSingleSection(sectionsAdded, 'Photo');
+    if (!image || image.photo.length === 0) return;
+    readImageUploaded(image.photo[0]);
+  }, [sectionsAdded]);
+
   const personalInfoItem = findSingleSection(sectionsAdded, 'Personal info');
   const summaryItem = findSingleSection(sectionsAdded, 'Summary');
   const educationItems = filterSections(sectionsAdded, 'Education');
   const workItems = filterSections(sectionsAdded, 'Work');
-
-  console.log(educationItems);
 
   return (
     <>
@@ -19,6 +33,9 @@ const Preview = ({ onClosePreview, sectionsAdded }) => {
       <div className="flex absolute  z-20 bg-white p-4 gap-8 left-1/2    -translate-x-1/2 shadow-lg leading-none h-[700px]   ">
         <section className="bg-blue-700 text-white w-8/12 px-6 py-4">
           <div className="flex flex-col items-start gap-6">
+            <div className="overflow-clip rounded-full aspect-square w-32 ">
+              <img className="" src={imageUploaded ?? ''} alt="user profile" />
+            </div>
             <h1 className="font-bold text-xl ">
               {personalInfoItem
                 ? `${personalInfoItem.firstName} ${personalInfoItem.lastName}`
