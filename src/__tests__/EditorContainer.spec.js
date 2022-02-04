@@ -93,6 +93,14 @@ describe('Editor Container', () => {
   });
 
   it('Delete an added section', async () => {
+    const mockIntersectionObserver = jest.fn();
+    mockIntersectionObserver.mockReturnValue({
+      observe: () => null,
+      unobserve: () => null,
+      disconnect: () => null,
+    });
+    window.IntersectionObserver = mockIntersectionObserver;
+
     userEvent.click(screen.getByTitle(/personal/i));
 
     const firstName = screen.getByLabelText(/first name/i);
@@ -117,6 +125,9 @@ describe('Editor Container', () => {
     userEvent.click(addedSection);
 
     userEvent.click(screen.getByRole('button', { name: /delete/i }));
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+    userEvent.click(screen.getByRole('button', { name: /confirm/i }));
 
     //the order of assertion matter apparently
     expect(

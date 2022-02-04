@@ -1,15 +1,18 @@
 import { useForm, FormProvider } from 'react-hook-form';
+import { useOutletContext, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
 import Summary from './Summary';
 import Work from './Work';
 import Photo from './Photo';
 import PersonalForm from './PersonalForm';
 import Education from './Education';
-import { useOutletContext, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import ConfirmationModal from '../Modal/ConfirmationModal';
 
 const EditForm = () => {
   const { dataId } = useParams();
   const { sectionsAdded, onUpdateInput, onRemoveItem } = useOutletContext();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const itemIdx = sectionsAdded.findIndex(item => item.id === dataId);
   const itemToEdit = sectionsAdded.find(item => item.id === dataId);
@@ -49,7 +52,8 @@ const EditForm = () => {
           <div className="flex self-end mt-4 gap-4">
             <button
               className=" ring-primary-purple ring-1 text-primary-purple w-max px-4 py-1 rounded-sm text-md"
-              onClick={handleRemoveItem}
+              onClick={() => setIsModalOpen(true)}
+              type="button"
             >
               Delete
             </button>
@@ -62,6 +66,12 @@ const EditForm = () => {
           </div>
         </form>
       </FormProvider>
+      <ConfirmationModal
+        item={itemToEdit}
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        onConfirm={handleRemoveItem}
+      />
     </main>
   );
 };
