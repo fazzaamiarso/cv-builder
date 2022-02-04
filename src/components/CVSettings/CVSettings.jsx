@@ -4,6 +4,7 @@ import { EmojiSadIcon } from '@heroicons/react/outline';
 import { findSingleSection, filterSections } from '../../utils/formUtils';
 
 const CVSettings = ({ sectionsAdded, onTogglePreview }) => {
+  const photoItem = findSingleSection(sectionsAdded, 'Photo');
   const personalInfoItem = findSingleSection(sectionsAdded, 'Personal info');
   const summaryItem = findSingleSection(sectionsAdded, 'Summary');
   const educationsItem = filterSections(sectionsAdded, 'Education');
@@ -18,6 +19,13 @@ const CVSettings = ({ sectionsAdded, onTogglePreview }) => {
         </div>
       ) : null}
       <ul className="flex flex-col w-full mt-4 space-y-2">
+        {photoItem ? (
+          <li className="flex font-bold text-lg">
+            <Link to={`/editor/edit/${photoItem.id}`}>
+              {photoItem.sectionName}
+            </Link>
+          </li>
+        ) : null}
         {personalInfoItem ? (
           <li className="flex font-bold text-lg">
             <Link to={`/editor/edit/${personalInfoItem.id}`}>

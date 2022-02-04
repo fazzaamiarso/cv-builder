@@ -6,9 +6,11 @@ const Input = ({ label, placeholder, name, type, registerConfig = {} }) => {
     register,
     formState: {
       errors: { [label]: error },
+
       //use bracket to get the computed value of label
     },
   } = useFormContext();
+
   return (
     <div className="flex flex-col gap-1 w-full">
       <label htmlFor={label} className="text-sm font-semibold">

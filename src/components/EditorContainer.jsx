@@ -1,9 +1,11 @@
-import SectionSelector from './SectionSelector';
 import { useState } from 'react';
-import CVSettings from './CVSettings/CVSettings';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import CVSettings from './CVSettings/CVSettings';
+import SectionSelector from './SectionSelector';
+import Preview from './CVPreview/Preview';
 import 'react-toastify/dist/ReactToastify.css';
+
 const EditorContainer = () => {
   const navigate = useNavigate();
   const [currentSection, setCurrentSection] = useState('Personal info');
@@ -58,6 +60,9 @@ const EditorContainer = () => {
         onTogglePreview={handleToggle}
         onRemoveItem={handleRemoveItem}
       />
+      {showPreview ? (
+        <Preview onClosePreview={handleToggle} sectionsAdded={sectionsAdded} />
+      ) : null}
     </main>
   );
 };

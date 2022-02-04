@@ -3,6 +3,7 @@ import Work from './Work';
 import Summary from './Summary';
 import PersonalForm from './PersonalForm';
 import Education from './Education';
+import Photo from './Photo';
 import { useOutletContext } from 'react-router-dom';
 import { findSingleSection } from '../../utils/formUtils';
 import { toast } from 'react-toastify';
@@ -15,7 +16,12 @@ const Form = () => {
   const { currentSection, onAddInput, sectionsAdded } = useOutletContext();
 
   const submitHandler = formValues => {
-    if (findSingleSection(sectionsAdded, currentSection)) {
+    if (
+      (currentSection === 'Personal info' ||
+        currentSection === 'Summary' ||
+        currentSection === 'Photo') &&
+      findSingleSection(sectionsAdded, currentSection)
+    ) {
       toast.error('Section already exist, please kindly edit to make change!', {
         hideProgressBar: false,
         autoClose: 4000,
@@ -31,6 +37,8 @@ const Form = () => {
       )}`,
     };
     onAddInput(newInput);
+
+    if ('photo' in formValues) return;
     formMethods.reset();
   };
 
@@ -54,6 +62,7 @@ const Form = () => {
           {currentSection === 'Summary' ? <Summary /> : null}
           {currentSection === 'Education' ? <Education /> : null}
           {currentSection === 'Work' ? <Work /> : null}
+          {currentSection === 'Photo' ? <Photo /> : null}
           <div className="flex self-end mt-4 gap-4 items-center">
             <button
               onClick={handleClear}

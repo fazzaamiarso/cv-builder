@@ -4,12 +4,14 @@ import {
   KeyIcon,
   AcademicCapIcon,
   BriefcaseIcon,
+  UserIcon,
 } from '@heroicons/react/outline';
 import {
   IdentificationIcon as IdentificationIconSolid,
   KeyIcon as KeyIconSolid,
   AcademicCapIcon as AcademicCapIconSolid,
   BriefcaseIcon as BriefcaseIconSolid,
+  UserIcon as UserIconSolid,
 } from '@heroicons/react/solid';
 
 const SectionSelector = ({ onSelectSection, currentSection }) => {
@@ -60,6 +62,14 @@ const SectionSelector = ({ onSelectSection, currentSection }) => {
             Icon={
               'Work' === currentSection ? BriefcaseIconSolid : BriefcaseIcon
             }
+          />
+          <SectionItem
+            key={'Photo'}
+            onSelected={onSelectSection}
+            sectionName={'Photo'}
+            isActive={'Photo' === currentSection}
+            displayText="Photo"
+            Icon={'Photo' === currentSection ? UserIconSolid : UserIcon}
           />
         </ul>
       </div>

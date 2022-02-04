@@ -1,11 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable jest/no-commented-out-tests */
-import {
-  screen,
-  fireEvent,
-  within,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { screen, fireEvent, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from '../testUtils/TestUtils';
 import fakeInput from '../testUtils/fakeInput';
@@ -98,6 +93,14 @@ describe('Editor Container', () => {
   });
 
   it('Delete an added section', async () => {
+    const mockIntersectionObserver = jest.fn();
+    mockIntersectionObserver.mockReturnValue({
+      observe: () => null,
+      unobserve: () => null,
+      disconnect: () => null,
+    });
+    window.IntersectionObserver = mockIntersectionObserver;
+
     userEvent.click(screen.getByTitle(/personal/i));
 
     const firstName = screen.getByLabelText(/first name/i);
@@ -122,6 +125,9 @@ describe('Editor Container', () => {
     userEvent.click(addedSection);
 
     userEvent.click(screen.getByRole('button', { name: /delete/i }));
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+    userEvent.click(screen.getByRole('button', { name: /confirm/i }));
 
     //the order of assertion matter apparently
     expect(
@@ -235,5 +241,19 @@ describe('Form', () => {
     const allTextBox = await screen.findAllByRole('textbox');
     //must use wait for because the submit event's reset call is async, without it, will get the filled value because it is not resetted yet
     allTextBox.forEach(textbox => expect(textbox).toHaveValue(''));
+  });
+  it('Image input render image when uploaded', async () => {
+    const file = new File(['Test'], 'Test.png', { type: 'image/png' });
+
+    renderWithRouter(<App />, ['/editor/add']);
+    userEvent.click(screen.getByTitle(/photo/i));
+
+    const imageUploader = screen.getByLabelText(/photo/i);
+    userEvent.upload(imageUploader, file);
+
+    expect(
+      await screen.findByRole('img', { name: /user profile/i }),
+    ).toBeInTheDocument();
+    expect(imageUploader.files).toHaveLength(1);
   });
 });
