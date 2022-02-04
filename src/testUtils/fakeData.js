@@ -15,7 +15,7 @@ const data = [
   },
   {
     degree: 'Bsc',
-    fieldOfStudy: 'Data Science',
+    fieldOfStudy: 'Biotechnology',
     id: 'education7657',
     institution: 'MIT',
     sectionName: 'Education',
@@ -34,7 +34,7 @@ const data = [
   },
   {
     degree: 'Msc',
-    fieldOfStudy: 'Data Science',
+    fieldOfStudy: 'Computer Science',
     id: 'education7257',
     institution: 'MIT',
     sectionName: 'Education',

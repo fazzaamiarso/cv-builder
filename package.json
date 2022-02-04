@@ -6,6 +6,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "jest --watchAll ",
+    "test:only": "jest --watch -o",
     "lint": "eslint src/**/*.{js,jsx} --fix ",
     "cypress:open": "cypress open",
     "prepare": "husky install"

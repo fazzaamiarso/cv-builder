@@ -17,7 +17,9 @@ const Form = () => {
 
   const submitHandler = formValues => {
     if (
-      (currentSection === 'Personal info' || currentSection === 'Summary') &&
+      (currentSection === 'Personal info' ||
+        currentSection === 'Summary' ||
+        currentSection === 'Photo') &&
       findSingleSection(sectionsAdded, currentSection)
     ) {
       toast.error('Section already exist, please kindly edit to make change!', {
@@ -35,6 +37,7 @@ const Form = () => {
       )}`,
     };
     onAddInput(newInput);
+
     if ('photo' in formValues) return;
     formMethods.reset();
   };
