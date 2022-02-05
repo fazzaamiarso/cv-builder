@@ -10,10 +10,10 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Form = () => {
+  const { currentSection, onAddInput, sectionsAdded } = useOutletContext();
   const formMethods = useForm({
     shouldUnregister: true,
   });
-  const { currentSection, onAddInput, sectionsAdded } = useOutletContext();
 
   const submitHandler = formValues => {
     if (
@@ -73,7 +73,7 @@ const Form = () => {
             </button>
             <button
               type="submit"
-              className=" bg-primary-purple text-white  w-max px-4 py-1 rounded-sm text-md"
+              className="bg-primary-purple text-white  w-max px-4 py-1 rounded-sm text-md"
             >
               Submit
             </button>
