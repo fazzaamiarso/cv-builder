@@ -36,7 +36,7 @@ describe('user flow', () => {
 
     cy.findByTitle(/photo/i).click();
     cy.findByLabelText(/photo/i).attachFile('user-profile.png');
-    cy.get('@submitBtn').click();
+    cy.findByRole('button', { name: /submit/i }).click();
 
     cy.findByTitle(/work/i).click();
     cy.findByLabelText(/role/i).type('Marketing intern');
@@ -46,7 +46,7 @@ describe('user flow', () => {
     cy.findByLabelText(/description/i).type(
       'Worked as intern in facebook group marketing campaign',
     );
-    cy.get('@submitBtn').click();
+    cy.findByRole('button', { name: /submit/i }).click();
     cy.findByRole('button', { name: /preview/i }).click();
   });
 });

@@ -14,7 +14,6 @@ const Form = () => {
   const formMethods = useForm({
     shouldUnregister: true,
   });
-  const { reset, clearErrors, handleSubmit } = formMethods;
 
   const submitHandler = formValues => {
     if (
@@ -40,15 +39,15 @@ const Form = () => {
     onAddInput(newInput);
 
     if ('photo' in formValues) return;
-    reset();
+    formMethods.reset();
   };
 
   const handleClear = () => {
     toast.info('Form cleared!', {
       position: toast.POSITION.BOTTOM_CENTER,
     });
-    reset();
-    clearErrors();
+    formMethods.reset();
+    formMethods.clearErrors();
   };
 
   return (
@@ -56,7 +55,7 @@ const Form = () => {
       <h2 className="text-2xl font-bold">{currentSection}</h2>
       <FormProvider {...formMethods}>
         <form
-          onSubmit={handleSubmit(submitHandler)}
+          onSubmit={formMethods.handleSubmit(submitHandler)}
           className="flex flex-col gap-4"
         >
           {currentSection === 'Personal info' ? <PersonalForm /> : null}
