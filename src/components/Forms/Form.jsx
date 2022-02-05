@@ -10,10 +10,11 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Form = () => {
+  const { currentSection, onAddInput, sectionsAdded } = useOutletContext();
   const formMethods = useForm({
     shouldUnregister: true,
   });
-  const { currentSection, onAddInput, sectionsAdded } = useOutletContext();
+  const { reset, clearErrors, handleSubmit } = formMethods;
 
   const submitHandler = formValues => {
     if (
@@ -39,15 +40,15 @@ const Form = () => {
     onAddInput(newInput);
 
     if ('photo' in formValues) return;
-    formMethods.reset();
+    reset();
   };
 
   const handleClear = () => {
     toast.info('Form cleared!', {
       position: toast.POSITION.BOTTOM_CENTER,
     });
-    formMethods.reset();
-    formMethods.clearErrors();
+    reset();
+    clearErrors();
   };
 
   return (
@@ -55,7 +56,7 @@ const Form = () => {
       <h2 className="text-2xl font-bold">{currentSection}</h2>
       <FormProvider {...formMethods}>
         <form
-          onSubmit={formMethods.handleSubmit(submitHandler)}
+          onSubmit={handleSubmit(submitHandler)}
           className="flex flex-col gap-4"
         >
           {currentSection === 'Personal info' ? <PersonalForm /> : null}
@@ -73,7 +74,7 @@ const Form = () => {
             </button>
             <button
               type="submit"
-              className=" bg-primary-purple text-white  w-max px-4 py-1 rounded-sm text-md"
+              className="bg-primary-purple text-white  w-max px-4 py-1 rounded-sm text-md"
             >
               Submit
             </button>
