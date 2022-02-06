@@ -99,7 +99,7 @@ describe('Editor Container', () => {
       unobserve: () => null,
       disconnect: () => null,
     });
-    window.IntersectionObserver = mockIntersectionObserver;
+    window.IntersectionObserver = mockIntersectionObserver; //headless UI modal component use intersection observer
 
     userEvent.click(screen.getByTitle(/personal/i));
 

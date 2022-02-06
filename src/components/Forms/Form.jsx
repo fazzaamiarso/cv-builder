@@ -51,7 +51,7 @@ const Form = () => {
   };
 
   return (
-    <main className="flex flex-col col-span-2 gap-4 bg-white p-6 shadow-lg rounded-sm">
+    <main className="col-span-2 flex flex-col gap-4 rounded-sm bg-white p-6 shadow-lg ">
       <h2 className="text-2xl font-bold">{currentSection}</h2>
       <FormProvider {...formMethods}>
         <form
@@ -63,17 +63,17 @@ const Form = () => {
           {currentSection === 'Education' ? <Education /> : null}
           {currentSection === 'Work' ? <Work /> : null}
           {currentSection === 'Photo' ? <Photo /> : null}
-          <div className="flex self-end mt-4 gap-4 items-center">
+          <div className="mt-4 flex items-center gap-4 self-end">
             <button
               onClick={handleClear}
-              className=" ring-primary-purple ring-1 text-primary-purple w-max px-4 py-1 rounded-sm text-md"
+              className=" text-md w-max rounded-sm px-4 py-1 text-primary-purple ring-1 ring-primary-purple"
               type="button" //prevent submit
             >
               Clear
             </button>
             <button
               type="submit"
-              className="bg-primary-purple text-white  w-max px-4 py-1 rounded-sm text-md"
+              className="text-md w-max  rounded-sm bg-primary-purple px-4 py-1 text-white"
             >
               Submit
             </button>
